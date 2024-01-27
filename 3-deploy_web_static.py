@@ -1,8 +1,23 @@
 #!/usr/bin/python3
 """A module that deploys an archive file to a web server."""
-from fabric.api import put, run, env
+from fabric.api import env, local, put, run
+from datetime import datetime
+from os import stat
 from os.path import exists
 env.hosts = ['100.25.111.4', '54.144.149.173']
+
+
+def do_pack():
+    """A function to compress a web static files into .tgz archive file."""
+    local('mkdir -p versions')
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    tgz_file = "versions/web_static_{}.tgz".format(timestamp)
+    try:
+        local('tar -cvzf "{}" ./web_static'.format(tgz_file))
+        print("Generated tgz size:\t{}".format(stat(tgz_file).st_size))
+    except Exception:
+        tgz_file = None
+    return tgz_file
 
 
 def do_deploy(archive_path):
@@ -26,3 +41,15 @@ def do_deploy(archive_path):
         return True
     except Exception:
         return False
+
+
+def deploy():
+    """A function to deploy a web static"""
+    path = do_pack()
+    if (path is None):
+        return False
+    try:
+        local('ls {}'.format(path))
+    except Exception:
+        return False
+    return do_deploy(path)
