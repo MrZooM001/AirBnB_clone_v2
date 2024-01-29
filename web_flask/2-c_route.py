@@ -7,19 +7,19 @@ app = Flask(__name__)
 @app.route("/", strict_slashes=False)
 def hello_flask():
     """a function that view the root of the website"""
-    return "<p>Hello HBNB!</p>"
+    return "Hello HBNB!"
 
 
 @app.route("/hbnb", strict_slashes=False)
 def hbnb():
     """a function that view hbnb page"""
-    return "<p>HBNB</p>"
+    return "HBNB"
 
 
 @app.route("/c/<text>", strict_slashes=False)
 def c_is_fun(text):
     """a function that view c page with a text"""
-    return "<p>C {}</p>".format(text.replace("_", " "))
+    return "C {}".format(text.replace("_", " "))
 
 
 if __name__ == "__main__":
