@@ -43,7 +43,7 @@ def numbersandtemplates(n):
 
 @app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
 def numbersandevenness(n):
-    """display a HTML page only if n is an integer & view parity type"""
+    """a function that only view HTML page if n is an integer & parity type"""
     if n % 2 == 0:
         parity = "even"
     else:
