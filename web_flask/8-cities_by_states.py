@@ -6,12 +6,11 @@ from models import *
 app = Flask(__name__)
 
 
-@app.route("/states_list", strict_slashes=False)
-def list_of_states():
-    """a function that displays a HTML page with a list of states
-    & sorted by state name in alphabetical order"""
-    states = sorted(list(storage.all("State").values()), key=lambda s: s.name)
-    return render_template("7-states_list.html", states=states)
+@app.route('/cities_by_states', strict_slashes=False)
+def cities_by_states():
+    """display the states and cities listed in alphabetical order"""
+    states = storage.all("State").values()
+    return render_template('8-cities_by_states.html', states=states)
 
 
 @app.teardown_appcontext
