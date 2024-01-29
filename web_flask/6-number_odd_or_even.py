@@ -36,13 +36,14 @@ def is_it_number(n):
 
 
 @app.route("/number_template/<int:n>", strict_slashes=False)
-def numbersandtemplates(n):
+def number_template(n):
     """a function that only view HTML page if n is a number"""
+    n = str(n)
     return render_template("5-number.html", n=n)
 
 
 @app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
-def numbersandevenness(n):
+def odd_or_even(n):
     """a function that only view HTML page if n is an integer & parity type"""
     if n % 2 == 0:
         parity = "even"
