@@ -2,29 +2,27 @@
 """A script that starts a Flask web application"""
 from flask import Flask, render_template
 from models import storage
-from models.state import State
-from models import *
 app = Flask(__name__)
 
 
+@app.route("/states_list", strict_slashes=False)
+def list_of_states():
+    """a function that displays a HTML page with a list of states
+    & sorted by state name in alphabetical order"""
+    states = sorted(list(storage.all("State").values()), key=lambda s: s.name)
+    return render_template("7-states_list.html", states=states)
+
+
 @app.route('/cities_by_states', strict_slashes=False)
-def cities_by_states():
-    """display the states and cities listed in alphabetical order"""
-    states = storage.all(State).values()
-    states = sorted(states, key=lambda key: key.name)
-    return render_template('7-states_list.html', states=states)
-
-
 def cities_list():
     """a function that displays HTML page with a list cities
     ordered by states"""
-    states = storage.all(State).values()
-    states = sorted(states, key=lambda key: key.name)
-    state_cities = []
+    states = storage.all("State").values()
+    states = sorted(states, key=lambda s: s.name)
+    st_cities = []
     for state in states:
-        state_cities.append([state, sorted(state.citites,
-                                           key=lambda key: key.name)])
-    return render_template('8-cities_by_states.html', states=state_cities,
+        st_cities.append([state, sorted(state.cities, key=lambda c: c.name)])
+    return render_template('8-cities_by_states.html', states=st_cities,
                            heading="States")
 
 
